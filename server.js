@@ -4,11 +4,18 @@ const cors = require("cors");
 
 const app = express();
 
+
 app.use(cors({
-    origin: "https://hello-kitty-surpriz.web.app"
+    origin: [
+        "https://hello-kitty-surpriz.web.app",
+        "http://localhost:5000"
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"]
 }));
 
 app.use(express.json());
+
 
 // API kontrolü
 app.get("/", (req, res) => {
