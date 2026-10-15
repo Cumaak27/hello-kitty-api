@@ -2,8 +2,8 @@
   "name": "hello-kitty-api",
   "version": "1.0.0",
   "main": "server.js",
-  "dependencies": {
-    "@google/generative-ai": "^0.24.1",
-    "express": "^4.21.0"
-  }
+ "dependencies": {
+  "@google/genai": "^1.0.0",
+  "express": "^4.21.0"
+}
 }
