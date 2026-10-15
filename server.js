@@ -1,32 +1,56 @@
+
 const express = require("express");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenAI } = require("@google/genai");
 
 const app = express();
+
 app.use(express.json());
 
-// Kök dizine gelen isteklerde index.html'i sun
-app.use(express.static(__dirname));
+app.get("/", (req, res) => {
+    res.json({
+        status: "ok",
+        message: "Hello Kitty API çalışıyor! 🎀"
+    });
+});
 
 app.post("/api/chat", async (req, res) => {
     try {
-        const { message } = req.body;
-        
+        const { message } = req.body || {};
+
         if (!process.env.GEMINI_API_KEY) {
-            return res.status(500).json({ error: "GEMINI_API_KEY bulunamadı." });
+            return res.status(500).json({
+                error: "GEMINI_API_KEY bulunamadı."
+            });
         }
 
-        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        if (typeof message !== "string" || !message.trim()) {
+            return res.status(400).json({
+                error: "Lütfen bir mesaj yaz."
+            });
+        }
 
-        const prompt = `Sen Hello Kitty'sin! Çok tatlı, sevimli, nazik ve pembe dünyayı seven bir dille konuşuyorsun. Kullanıcıya 'Tuana' olarak hitap et ve her cevabına sevimli emojiler (🌸, 🎀, ✨, 🐱) ekle. Kullanıcının mesajı: ${message}`;
+        const ai = new GoogleGenAI({
+            apiKey: process.env.GEMINI_API_KEY
+        });
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        
-        res.json({ reply: response.text() });
+        const result = await ai.models.generateContent({
+            model: "gemini-3.8-flash",
+            contents:
+                "Sen Hello Kitty temalı, sevimli ve nazik bir asistansın. " +
+                "Türkçe konuş, uygun yerlerde 🌸 🎀 ✨ 🐱 emojileri kullan. " +
+                "Kullanıcıya Tuana diye hitap et. Mesaj: " +
+                message.trim()
+        });
+
+        res.json({
+            reply: result.text
+        });
     } catch (error) {
-        console.error("Gemini Hata:", error);
-        res.status(500).json({ error: error.message || "Bir hata oluştu." });
+        console.error("Gemini Hatası:", error.message);
+
+        res.status(500).json({
+            error: "Yanıt oluşturulamadı. Lütfen tekrar dene."
+        });
     }
 });
 
