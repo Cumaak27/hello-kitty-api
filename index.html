@@ -14,6 +14,195 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Anılarımız Bölümü Stilleri */
+.pink-memories-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px 20px;
+    background: rgba(255, 245, 248, 0.95);
+    border-radius: 30px;
+    border: 2px dashed #ff80ab;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.25);
+    font-family: 'Poppins', sans-serif;
+}
+
+.memories-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.memories-header h2 {
+    color: #d81b60;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.memories-header p {
+    color: #888;
+    font-size: 13px;
+}
+
+/* Fotoğraf Yükleme Paneli */
+.memory-upload-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    background: white;
+    padding: 15px;
+    border-radius: 20px;
+    border: 1px solid #ffb6c1;
+}
+
+.memory-upload-box input[type="text"], 
+.memory-upload-box input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid #ff80ab;
+    border-radius: 12px;
+    outline: none;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    color: #444;
+}
+
+.file-upload-btn {
+    background: #fce4ec;
+    color: #d81b60;
+    padding: 8px 15px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #f48fb1;
+    display: inline-flex;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.file-upload-btn:hover {
+    background: #f8bbd0;
+}
+
+.cute-btn {
+    background: #e91e63;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.2s;
+    box-shadow: 0 4px 10px rgba(233, 30, 99, 0.3);
+}
+
+.cute-btn:hover {
+    background: #c2185b;
+}
+
+/* Polaroid Izgara Düzeni */
+.polaroid-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* Polaroid Kart Yapısı */
+.polaroid-card {
+    background: #ffffff;
+    padding: 12px 12px 20px 12px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    width: 210px;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid #ffe4e8;
+}
+
+.polaroid-card:nth-child(odd) {
+    transform: rotate(-2deg);
+}
+
+.polaroid-card:nth-child(even) {
+    transform: rotate(2deg);
+}
+
+.polaroid-card:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 15px 30px rgba(255, 64, 129, 0.25);
+    z-index: 10;
+}
+
+/* İğne Simgesi ve Silme Butonu */
+.polaroid-pin {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+}
+
+.delete-memory {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: 0.2s;
+    z-index: 5;
+}
+
+.delete-memory:hover {
+    background: #ff80ab;
+    color: white;
+}
+
+/* Fotoğraf Alanı */
+.polaroid-img-wrapper {
+    width: 100%;
+    height: 190px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fce4ec;
+}
+
+.polaroid-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Polaroid Alt Yazı Stili */
+.polaroid-caption {
+    margin-top: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.caption-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: #c2185b;
+    font-family: 'Caveat', 'Comic Sans MS', cursive;
+}
+
+.caption-date {
+    font-size: 10px;
+    color: #a1a1a1;
+}
         /* Ziyaretçi Defteri Stilleri */
 .pink-guestbook-container {
     max-width: 500px;
@@ -824,6 +1013,29 @@
         <!-- Eklenen notlar buraya otomatik gelecek -->
     </div>
 </div>
+    <!-- ANILARIMIZ / DİNAMİK POLAROID FOTOĞRAF GALERİSİ -->
+<section id="memories-section" class="pink-memories-container">
+    <div class="memories-header">
+        <h2>📸 En Tatlı Anılarımız 🌸</h2>
+        <p>Kendi fotoğrafını seç, anını pembe çerçeveye sabitle!</p>
+    </div>
+
+    <!-- Fotoğraf Ekleme Formu -->
+    <div class="memory-upload-box">
+        <input type="text" id="memory-caption" placeholder="Fotoğrafın altındaki tatlı not... ✨" maxlength="35">
+        <input type="date" id="memory-date">
+        <label for="memory-file-input" class="file-upload-btn">
+            🎀 Fotoğraf Seç
+        </label>
+        <input type="file" id="memory-file-input" accept="image/*" style="display: none;">
+        <button id="add-memory-btn" class="cute-btn">Albüm Ekle 💖</button>
+    </div>
+
+    <!-- Polaroid Fotoğraf Kartları Izgarası -->
+    <div class="polaroid-grid" id="polaroid-grid">
+        <!-- Dinamik kartlar buraya eklenecek -->
+    </div>
+</section>
 <!-- MUTLULUK VE SAYAC KÖŞESİ -->
 <div class="pink-counter-widget">
     <div class="counter-header">
@@ -974,6 +1186,92 @@
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const fileInput = document.getElementById("memory-file-input");
+    const captionInput = document.getElementById("memory-caption");
+    const dateInput = document.getElementById("memory-date");
+    const addBtn = document.getElementById("add-memory-btn");
+    const grid = document.getElementById("polaroid-grid");
+
+    // Hafızadan anıları yükle (Varsayılan örnekler eklenebilir)
+    let memories = JSON.parse(localStorage.getItem("tuana_memories")) || [];
+
+    let selectedImageBase64 = "";
+
+    // Dosya seçildiğinde resmi Base64 formatına çevir
+    fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(uploadEvent) {
+                selectedImageBase64 = uploadEvent.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function renderMemories() {
+        grid.innerHTML = "";
+        
+        if (memories.length === 0) {
+            grid.innerHTML = `<p style="color: #aaa; font-size: 13px; text-align: center; width: 100%;">Henüz hiç anı eklenmemiş. Yukarıdan ilk fotoğrafını seç ve ekle! 🌸</p>`;
+            return;
+        }
+
+        memories.forEach((mem, index) => {
+            const card = document.createElement("div");
+            card.className = "polaroid-card";
+            
+            card.innerHTML = `
+                <div class="polaroid-pin">📌</div>
+                <button class="delete-memory" onclick="deleteMemory(${index})" title="Sil">❌</button>
+                <div class="polaroid-img-wrapper">
+                    <img src="${mem.image}" alt="Anı Fotoğrafı">
+                </div>
+                <div class="polaroid-caption">
+                    <span class="caption-text">${mem.caption || "Tatlı Bir Anı ✨"}</span>
+                    <span class="caption-date">${mem.date || ""}</span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        localStorage.setItem("tuana_memories", JSON.stringify(memories));
+    }
+
+    // Yeni Anı Ekleme Butonu
+    addBtn.addEventListener("click", () => {
+        if (!selectedImageBase64) {
+            alert("Lütfen önce sevimli bir fotoğraf seç 🥺");
+            return;
+        }
+
+        const caption = captionInput.value.trim();
+        const date = dateInput.value;
+
+        memories.unshift({
+            image: selectedImageBase64,
+            caption: caption,
+            date: date
+        });
+
+        // Formu sıfırla
+        captionInput.value = "";
+        dateInput.value = "";
+        fileInput.value = "";
+        selectedImageBase64 = "";
+
+        renderMemories();
+    });
+
+    // Global silme fonksiyonu
+    window.deleteMemory = function(index) {
+        memories.splice(index, 1);
+        renderMemories();
+    }
+
+    renderMemories();
+});
         document.addEventListener("DOMContentLoaded", () => {
     const authorInput = document.getElementById("not-author");
     const textInput = document.getElementById("not-text");
