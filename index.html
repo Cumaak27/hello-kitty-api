@@ -1865,7 +1865,6 @@ function toggleAccessory(show) {
         }
 
         setInterval(() => { kalpOlustur(); }, 800);
-        // BİZİM ŞARKIMIZ MÜZİK ÇALAR MANTIĞI
 document.addEventListener("DOMContentLoaded", () => {
     const music = document.getElementById("bg-music");
     const musicBtn = document.getElementById("music-toggle-btn");
@@ -1873,21 +1872,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!music || !musicBtn) return;
 
-    // Sesi biraz daha yumuşak/lofi seviyeye çek
     music.volume = 0.4;
 
-    musicBtn.addEventListener("click", () => {
-        if (music.paused) {
-            music.play();
-            musicBtn.classList.add("playing");
-            musicIcon.textContent = "⏸️"; // Durdur ikonu
-        } else {
-            music.pause();
-            musicBtn.classList.remove("playing");
-            musicIcon.textContent = "🎵"; // Müzik ikonu
+    musicBtn.addEventListener("click", async () => {
+        try {
+            if (music.paused) {
+                // play() bir Promise döndürür, tamamlanmasını bekleriz
+                await music.play();
+                musicBtn.classList.add("playing");
+                musicIcon.textContent = "⏸️";
+            } else {
+                music.pause();
+                musicBtn.classList.remove("playing");
+                musicIcon.textContent = "🎵";
+            }
+        } catch (error) {
+            // Eğer play() durdurulduysa veya tarayıcı engellediyse hata konsolda patlamaz
+            console.log("Müzik oynatma hatası engellendi:", error);
         }
     });
 });
+ 
     </script>
 <!-- MÜZİK KÖŞESİ (FLOATING MUSIC PLAYER) -->
 <div class="music-player-widget">
