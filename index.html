@@ -14,6 +14,73 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Pembe Müzik Köşesi Stilleri */
+.music-player-widget {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Kalp Butonu */
+.heart-music-btn {
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #ff4081, #ff80ab);
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 64, 129, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    outline: none;
+}
+
+.heart-music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(255, 64, 129, 0.6);
+}
+
+/* Müzik Çalarken Kalbin Ritimle Atma Animasyonu */
+.heart-music-btn.playing {
+    animation: heartbeat 1.2s infinite ease-in-out;
+    background: linear-gradient(135deg, #d81b60, #ff4081);
+}
+
+/* Müzik Bilgisi Etiketi */
+.music-info-badge {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #ff80ab;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.music-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #d81b60;
+}
+
+/* Atış Animasyonu */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.12); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.12); }
+    70% { transform: scale(1); }
+}
        /* SVG Gardırop Stilleri */
 .kitty-dressup-container {
     max-width: 750px;
@@ -1798,8 +1865,48 @@ function toggleAccessory(show) {
         }
 
         setInterval(() => { kalpOlustur(); }, 800);
-    </script>
+        // BİZİM ŞARKIMIZ MÜZİK ÇALAR MANTIĞI
+document.addEventListener("DOMContentLoaded", () => {
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-toggle-btn");
+    const musicIcon = document.getElementById("music-icon");
 
+    if (!music || !musicBtn) return;
+
+    // Sesi biraz daha yumuşak/lofi seviyeye çek
+    music.volume = 0.4;
+
+    musicBtn.addEventListener("click", () => {
+        if (music.paused) {
+            music.play();
+            musicBtn.classList.add("playing");
+            musicIcon.textContent = "⏸️"; // Durdur ikonu
+        } else {
+            music.pause();
+            musicBtn.classList.remove("playing");
+            musicIcon.textContent = "🎵"; // Müzik ikonu
+        }
+    });
+});
+    </script>
+<!-- MÜZİK KÖŞESİ (FLOATING MUSIC PLAYER) -->
+<div class="music-player-widget">
+    <!-- Müzik Ses Dosyası (Sözsüz tatlı bir lofi/romantik müzik varsayılan eklendi) -->
+    <audio id="bg-music" loop>
+        <source src="https://www.youtube.com/watch?v=MGT6e1M43cY&list=RDMGT6e1M43cY&start_radio=1" type="audio/mpeg">
+        Tarayıcınız müzik çaları desteklemiyor.
+    </audio>
+
+    <!-- Kalp Şeklinde Oynat/Durdur Butonu -->
+    <button id="music-toggle-btn" class="heart-music-btn" title="Bizim Şarkımızı Çal 🎵">
+        <span id="music-icon">🎵</span>
+    </button>
+    
+    <!-- Müzik İsmi Etiketi -->
+    <div class="music-info-badge">
+        <span class="music-title">Tuana'nın Şarkısı ✨</span>
+    </div>
+</div>
 </body>
 
 </html>
