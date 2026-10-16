@@ -14,6 +14,133 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Ziyaretçi Defteri Stilleri */
+.pink-guestbook-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 25px;
+    background: rgba(255, 240, 245, 0.95);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    border: 2px solid #ffb6c1;
+    font-family: 'Poppins', sans-serif;
+}
+
+.guestbook-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.guestbook-header h3 {
+    color: #d81b60;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.guestbook-header p {
+    color: #888;
+    font-size: 13px;
+}
+
+.guestbook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.guestbook-form input, .guestbook-form textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ff80ab;
+    border-radius: 15px;
+    outline: none;
+    background: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+.guestbook-form textarea {
+    resize: none;
+}
+
+/* Notların Dizildiği Duvar Alanı */
+.notes-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+/* Tekil Yapışkan Not Kartı */
+.sticky-note {
+    background: linear-gradient(135deg, #fff9c4, #fff59d);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    position: relative;
+    border: 1px solid #fff176;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Pembe ve mor renkli alternatif not kartları için */
+.sticky-note:nth-child(even) {
+    background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+    border: 1px solid #f48fb1;
+}
+
+.sticky-note::before {
+    content: '📌';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+}
+
+.note-content {
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 10px;
+    word-break: break-word;
+    margin-top: 5px;
+}
+
+.note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #d81b60;
+    font-weight: 600;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+    padding-top: 5px;
+}
+
+.delete-note {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.6;
+    transition: 0.2s;
+}
+
+.delete-note:hover {
+    opacity: 1;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
         /* Sayaç Widget Stilleri (Sitenin Temasına Uyumlu) */
 .pink-counter-widget {
     max-width: 380px;
@@ -678,6 +805,25 @@
             <a href="#surprise">Sürpriz</a>
         </div>
     </nav>
+    <!-- ZİYARETÇİ DEFTERİ / NOTLAR KÖŞESİ -->
+<div class="pink-guestbook-container">
+    <div class="guestbook-header">
+        <h3>📌 Tuana'nın Anı ve Not Defteri 🌸</h3>
+        <p>Aklından geçen tatlı bir sözü veya anıyı buraya yapıştır!</p>
+    </div>
+
+    <!-- Not Yazma Formu -->
+    <div class="guestbook-form">
+        <input type="text" id="not-author" placeholder="Adın (isteğe bağlı)..." maxlength="20">
+        <textarea id="not-text" placeholder="Bugün için tatlı bir not bırak... ✨" rows="2" maxlength="120"></textarea>
+        <button id="add-not-btn" class="cute-btn">Notu Yapıştır 📌</button>
+    </div>
+
+    <!-- Notların Listelendiği Duvar -->
+    <div id="notes-board" class="notes-board">
+        <!-- Eklenen notlar buraya otomatik gelecek -->
+    </div>
+</div>
 <!-- MUTLULUK VE SAYAC KÖŞESİ -->
 <div class="pink-counter-widget">
     <div class="counter-header">
@@ -828,6 +974,59 @@
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const authorInput = document.getElementById("not-author");
+    const textInput = document.getElementById("not-text");
+    const addBtn = document.getElementById("add-not-btn");
+    const board = document.getElementById("notes-board");
+
+    // Hafızadan notları yükle
+    let notes = JSON.parse(localStorage.getItem("tuana_notes")) || [
+        { author: "Tuana", text: "Bugün de dünyaya pembe neşe saçılıyor! 🌸" }
+    ];
+
+    function renderNotes() {
+        board.innerHTML = "";
+        notes.forEach((note, index) => {
+            const card = document.createElement("div");
+            card.className = "sticky-note";
+            
+            card.innerHTML = `
+                <div class="note-content">"${note.text}"</div>
+                <div class="note-footer">
+                    <span>- ${note.author || "Anonim"}</span>
+                    <button class="delete-note" onclick="deleteNote(${index})" title="Notu Sil">❌</button>
+                </div>
+            `;
+            board.appendChild(card);
+        });
+        localStorage.setItem("tuana_notes", JSON.stringify(notes));
+    }
+
+    // Not ekleme fonksiyonu
+    addBtn.addEventListener("click", () => {
+        const text = textInput.value.trim();
+        const author = authorInput.value.trim();
+
+        if (!text) {
+            alert("Lütfen minik bir not yaz 🥺");
+            return;
+        }
+
+        notes.unshift({ author: author, text: text });
+        textInput.value = "";
+        authorInput.value = "";
+        renderNotes();
+    });
+
+    // Global silme fonksiyonu
+    window.deleteNote = function(index) {
+        notes.splice(index, 1);
+        renderNotes();
+    }
+
+    renderNotes();
+});
         document.addEventListener("DOMContentLoaded", () => {
     // 1. MUTLULUK SAYACI (Geçmiş başlangıç tarihi - Örn: İlişkinin veya sitenin açıldığı tarih)
     const startDate = new Date("2026-10-05T00:00:00"); 
