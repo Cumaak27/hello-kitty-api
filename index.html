@@ -1865,7 +1865,6 @@ function toggleAccessory(show) {
         }
 
         setInterval(() => { kalpOlustur(); }, 800);
-// BİZİM ŞARKIMIZ MÜZİK ÇALAR (GÜNCELLENMİŞ VE KİLİTLİ VERSİYON)
 document.addEventListener("DOMContentLoaded", () => {
     const music = document.getElementById("bg-music");
     const musicBtn = document.getElementById("music-toggle-btn");
@@ -1873,27 +1872,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!music || !musicBtn) return;
 
-    music.volume = 0.4;
-    let isProcessing = false; // Hızlı tıklama kilidi
+    music.volume = 0.5;
+    let isProcessing = false;
 
     musicBtn.addEventListener("click", async () => {
-        if (isProcessing) return; // İşlem sürerken tıklamaları yoksay
+        if (isProcessing) return;
         isProcessing = true;
 
         try {
             if (music.paused) {
+                // Eğer ses henüz yüklenmediyse yüklemeye zorla
+                if (music.readyState === 0) {
+                    music.load();
+                }
+                
                 await music.play();
                 musicBtn.classList.add("playing");
-                musicIcon.textContent = "⏸️";
+                if (musicIcon) musicIcon.textContent = "⏸️";
             } else {
                 music.pause();
                 musicBtn.classList.remove("playing");
-                musicIcon.textContent = "🎵";
+                if (musicIcon) musicIcon.textContent = "🎵";
             }
         } catch (error) {
-            console.log("Müzik oynatma hatası engellendi:", error);
+            console.error("Müzik oynatma hatası:", error);
+            alert("Müzik dosyası yüklenemedi. Lütfen sayfanı yenileyip tekrar dene!");
         } finally {
-            isProcessing = false; // İşlem bitince kilidi aç
+            isProcessing = false;
         }
     });
 });
