@@ -14,6 +14,185 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Çiçek Bahçesi Stilleri */
+.flower-garden-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+    background: rgba(255, 240, 245, 0.9);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    border: 2px solid #ffb6c1;
+    font-family: 'Poppins', sans-serif;
+}
+
+.garden-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.garden-header h2 {
+    color: #d81b60;
+    margin-bottom: 5px;
+}
+
+.garden-header p {
+    color: #888;
+    font-size: 14px;
+}
+
+.garden-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Tıklanabilir Bahçe Alanı */
+.flower-field {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(180deg, #fff5f8 0%, #e8f5e9 100%);
+    border-radius: 20px;
+    border: 3px dashed #ff80ab;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: inset 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.field-instruction {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff4081;
+    font-weight: 600;
+    pointer-events: none;
+    opacity: 0.6;
+    animation: pulseText 2s infinite;
+}
+
+@keyframes pulseText {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.9; }
+}
+
+/* Tekil Çiçek Stili */
+.planted-flower {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    animation: growFlower 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transition: transform 0.2s;
+    z-index: 10;
+}
+
+.planted-flower:hover {
+    transform: translate(-50%, -100%) scale(1.15);
+}
+
+.flower-emoji {
+    font-size: 40px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+.flower-tag {
+    background: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    color: #c2185b;
+    border: 1px solid #ff80ab;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: -5px;
+}
+
+@keyframes growFlower {
+    0% { transform: translate(-50%, -100%) scale(0); }
+    100% { transform: translate(-50%, -100%) scale(1); }
+}
+
+/* Buton Tasarımları */
+.cute-btn {
+    background: linear-gradient(135deg, #ff80ab, #ff4081);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(255, 64, 129, 0.3);
+    transition: 0.2s;
+}
+
+.cute-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 64, 129, 0.4);
+}
+
+.cute-btn.secondary {
+    background: #fce4ec;
+    color: #c2185b;
+    box-shadow: none;
+    border: 1px solid #f8bbd0;
+}
+
+/* Modal (Popup) Tasarımı */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    border: 2px solid #ff80ab;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.modal-content h3 {
+    color: #d81b60;
+    margin-bottom: 10px;
+}
+
+.flower-type-selector {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.modal-content input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ff80ab;
+    border-radius: 12px;
+    outline: none;
+    margin-bottom: 15px;
+    text-align: center;
+    background: #fff0f5;
+    color: #333;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
 
         body {
             font-family: 'Quicksand', sans-serif;
@@ -464,6 +643,46 @@
             <p>Bazen mutluluk en küçük şeylerin içindedir. 🧸</p>
         </div>
     </section>
+    <!-- ÇİÇEK BAHÇESİ SEKMESİ / ALANI -->
+<div class="flower-garden-container">
+    <div class="garden-header">
+        <h2>🌷 Tuana'nın Sanal Çiçek Bahçesi 🌸</h2>
+        <p>Bahçene yeni bir çiçek ekmek için pembe alana tıkla!</p>
+        <div class="garden-stats">
+            <span>Toplam Çiçek: <strong id="flower-count">0</strong></span>
+            <button id="water-all-btn" class="cute-btn">💧 Hepsini Sula</button>
+            <button id="clear-garden-btn" class="cute-btn secondary">🗑️ Bahçeyi Temizle</button>
+        </div>
+    </div>
+
+    <!-- Tıklanabilir Bahçe Alanı -->
+    <div id="flower-field" class="flower-field">
+        <div class="field-instruction">✨ Çiçek dikmek için buraya tıkla ✨</div>
+    </div>
+</div>
+
+<!-- Çiçek İsimlendirme Modalı (Popup) -->
+<div id="flower-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <h3>🌸 Yeni Bir Çiçek Yetiştir 🎀</h3>
+        <p>Çiçeğin türünü seç ve ona tatlı bir isim ver:</p>
+        
+        <div class="flower-type-selector">
+            <label class="flower-radio"><input type="radio" name="fType" value="🌷" checked> 🌷 Lale</label>
+            <label class="flower-radio"><input type="radio" name="fType" value="🌸"> 🌸 Kiraz</label>
+            <label class="flower-radio"><input type="radio" name="fType" value="🌹"> 🌹 Gül</label>
+            <label class="flower-radio"><input type="radio" name="fType" value="🌻"> 🌻 Güneş</label>
+            <label class="flower-radio"><input type="radio" name="fType" value="🌼"> 🌼 Papatya</label>
+        </div>
+
+        <input type="text" id="flower-name-input" placeholder="Çiçeğinin adı ne olsun? (örn: Tatlı Papatya)" maxlength="25">
+        
+        <div class="modal-buttons">
+            <button id="modal-save" class="cute-btn">Toprağa Ek 🌱</button>
+            <button id="modal-cancel" class="cute-btn secondary">Vazgeç</button>
+        </div>
+    </div>
+</div>
 
     <footer>
         🎀🌷 Loveeee ♡ 🌸
@@ -471,6 +690,109 @@
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const field = document.getElementById("flower-field");
+    const modal = document.getElementById("flower-modal");
+    const saveBtn = document.getElementById("modal-save");
+    const cancelBtn = document.getElementById("modal-cancel");
+    const nameInput = document.getElementById("flower-name-input");
+    const countDisplay = document.getElementById("flower-count");
+    const waterAllBtn = document.getElementById("water-all-btn");
+    const clearBtn = document.getElementById("clear-garden-btn");
+
+    let flowers = JSON.parse(localStorage.getItem("tuana_flowers")) || [];
+    let clickCoords = { x: 0, y: 0 };
+
+    // Çiçekleri ekrana çizdirme
+    function renderFlowers() {
+        // Eski çiçek elementlerini temizle (talimat yazısı hariç)
+        const existingElements = field.querySelectorAll(".planted-flower");
+        existingElements.forEach(el => el.remove());
+
+        flowers.forEach((flower, index) => {
+            const div = document.createElement("div");
+            div.className = "planted-flower";
+            div.style.left = flower.x + "%";
+            div.style.top = flower.y + "%";
+
+            div.innerHTML = `
+                <div class="flower-emoji">${flower.type}</div>
+                <div class="flower-tag">${flower.name}</div>
+            `;
+
+            // Çiçeğe tıklandığında minik bir motivasyon mesajı göster
+            div.addEventListener("click", (e) => {
+                e.stopPropagation();
+                showFlowerMessage(flower.name);
+            });
+
+            field.appendChild(div);
+        });
+
+        countDisplay.textContent = flowers.length;
+        localStorage.setItem("tuana_flowers", JSON.stringify(flowers));
+    }
+
+    // Bahçeye tıklandığında modalı aç
+    field.addEventListener("click", (e) => {
+        const rect = field.getBoundingClientRect();
+        clickCoords.x = ((e.clientX - rect.left) / field.clientWidth) * 100;
+        clickCoords.y = ((e.clientY - rect.top) / field.clientHeight) * 100;
+
+        nameInput.value = "";
+        modal.style.display = "flex";
+        nameInput.focus();
+    });
+
+    // Çiçeği kaydet
+    saveBtn.addEventListener("click", () => {
+        const selectedType = document.querySelector('input[name="fType"]:checked').value;
+        const flowerName = nameInput.value.trim() || "Tatlı Çiçek";
+
+        flowers.push({
+            type: selectedType,
+            name: flowerName,
+            x: clickCoords.x,
+            y: clickCoords.y
+        });
+
+        modal.style.display = "none";
+        renderFlowers();
+    });
+
+    // İptal et
+    cancelBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    // Hepsini Sula butonu
+    waterAllBtn.addEventListener("click", () => {
+        alert("💧 Çiçekler sulandı! Mis gibi sevgi koktular 🌸✨");
+    });
+
+    // Bahçeyi Temizle butonu
+    clearBtn.addEventListener("click", () => {
+        if (confirm("Bahçedeki tüm çiçekler silinecek. Emin misin? 🥺")) {
+            flowers = [];
+            renderFlowers();
+        }
+    });
+
+    // Çiçeğe tıklama mesajı
+    function showFlowerMessage(name) {
+        const messages = [
+            `🌸 "${name}" sana kocaman gülümsedi!`,
+            `✨ "${name}" bugün çok güzel parlıyor!`,
+            `💖 "${name}" sevgiyle büyümeye devam ediyor!`,
+            `🌷 "${name}" Tuana'nın bahçesinin favorisi!`
+        ];
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+        alert(randomMsg);
+    }
+
+    // İlk yükleme
+    renderFlowers();
+});
         function surprizAc() {
             const mesaj = document.getElementById("surprise");
             if (mesaj.style.display === "block") {
