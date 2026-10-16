@@ -14,6 +14,108 @@
             padding: 0;
             box-sizing: border-box;
         }
+       /* SVG Gardırop Stilleri */
+.kitty-dressup-container {
+    max-width: 750px;
+    margin: 30px auto;
+    padding: 25px;
+    background: rgba(255, 240, 245, 0.95);
+    border-radius: 25px;
+    border: 2px solid #ff80ab;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+.dressup-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dressup-header h2 {
+    color: #d81b60;
+    margin: 0 0 5px 0;
+    font-size: 20px;
+}
+
+.dressup-header p {
+    color: #888;
+    font-size: 12px;
+    margin: 0;
+}
+
+.dressup-workspace {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.character-display {
+    width: 220px;
+    height: 260px;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 2px dashed #f48fb1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#hello-kitty-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.wardrobe-panel {
+    flex: 1;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-group {
+    background: white;
+    padding: 10px 14px;
+    border-radius: 15px;
+    border: 1px solid #ffb6c1;
+}
+
+.category-group h4 {
+    color: #c2185b;
+    font-size: 12px;
+    margin: 0 0 6px 0;
+}
+
+.option-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.item-btn {
+    background: #fff0f5;
+    border: 1px solid #ff80ab;
+    color: #d81b60;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.item-btn:hover {
+    background: #d81b60;
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
         /* Anılarımız Bölümü Stilleri */
 .pink-memories-container {
     max-width: 900px;
@@ -1179,6 +1281,122 @@
         </div>
     </div>
 </div>
+    <!-- HELLO KITTY GARDIROBU (SVG İLE KIRILMAYAN SİSTEM) -->
+<section class="kitty-dressup-container">
+    <div class="dressup-header">
+        <h2>🎀 Hello Kitty Gardırobu 🎀</h2>
+        <p>Kendi Hello Kitty'ni tasarla, ruh haline göre giydir!</p>
+    </div>
+
+    <div class="dressup-workspace">
+        <!-- SVG Tabanlı Karakter Alanı -->
+        <div class="character-display">
+            <svg id="hello-kitty-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                <!-- VÜCUT & KAFA (Taban) -->
+                <g id="base-character">
+                    <!-- Kulaklar -->
+                    <path d="M 45 65 Q 25 15 65 40 Z" fill="#ffffff" stroke="#333333" stroke-width="3.5" stroke-linejoin="round"/>
+                    <path d="M 155 65 Q 175 15 135 40 Z" fill="#ffffff" stroke="#333333" stroke-width="3.5" stroke-linejoin="round"/>
+                    <!-- Kulak İçi Pembe -->
+                    <path d="M 47 60 Q 32 25 60 42 Z" fill="#ffccd5"/>
+                    <path d="M 153 60 Q 168 25 140 42 Z" fill="#ffccd5"/>
+                    
+                    <!-- Kafa -->
+                    <ellipse cx="100" cy="85" rx="65" ry="48" fill="#ffffff" stroke="#333333" stroke-width="4"/>
+                    
+                    <!-- Gözler -->
+                    <ellipse cx="65" cy="88" rx="5" ry="7" fill="#333333"/>
+                    <ellipse cx="135" cy="88" rx="5" ry="7" fill="#333333"/>
+                    
+                    <!-- Burun -->
+                    <ellipse cx="100" cy="96" rx="6" ry="4.5" fill="#ffb703"/>
+                    
+                    <!-- Bıyıklar -->
+                    <line x1="28" y1="80" x2="48" y2="83" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="23" y1="92" x2="46" y2="92" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="28" y1="104" x2="48" y2="101" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+                    
+                    <line x1="172" y1="80" x2="152" y2="83" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="177" y1="92" x2="154" y2="92" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="172" y1="104" x2="152" y2="101" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+
+                    <!-- Vücut (Kollar & Bacaklar) -->
+                    <ellipse cx="78" cy="195" rx="10" ry="8" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+                    <ellipse cx="122" cy="195" rx="10" ry="8" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+                    <path d="M 70 135 C 65 170 135 170 130 135 Z" fill="#ffffff" stroke="#333333" stroke-width="3.5"/>
+                    <ellipse cx="60" cy="148" rx="8" ry="12" fill="#ffffff" stroke="#333333" stroke-width="3" transform="rotate(25 60 148)"/>
+                    <ellipse cx="140" cy="148" rx="8" ry="12" fill="#ffffff" stroke="#333333" stroke-width="3" transform="rotate(-25 140 148)"/>
+                </g>
+
+                <!-- KATMAN: ELBİSE -->
+                <g id="svg-dress">
+                    <path d="M 72 133 L 128 133 L 138 180 L 62 180 Z" fill="#ff4081" stroke="#333333" stroke-width="3" stroke-linejoin="round"/>
+                </g>
+
+                <!-- KATMAN: FİYONK / KURDELE -->
+                <g id="svg-bow" transform="translate(130, 52)">
+                    <circle cx="-12" cy="0" r="10" fill="#ff1744" stroke="#333333" stroke-width="2.5"/>
+                    <circle cx="12" cy="0" r="10" fill="#ff1744" stroke="#333333" stroke-width="2.5"/>
+                    <circle cx="0" cy="0" r="6" fill="#ff5252" stroke="#333333" stroke-width="2.5"/>
+                </g>
+
+                <!-- KATMAN: AKSESUAR (Gözlük vb.) -->
+                <g id="svg-accessory" class="hidden">
+                    <!-- Gözlük -->
+                    <rect x="50" y="78" width="30" height="20" rx="5" fill="none" stroke="#ff4081" stroke-width="3.5"/>
+                    <rect x="120" y="78" width="30" height="20" rx="5" fill="none" stroke="#ff4081" stroke-width="3.5"/>
+                    <line x1="80" y1="88" x2="120" y2="88" stroke="#ff4081" stroke-width="3.5"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Gardırop Paneli -->
+        <div class="wardrobe-panel">
+            <div class="category-group">
+                <h4>👗 Elbiseler</h4>
+                <div class="option-buttons">
+                    <button class="item-btn" onclick="setDress('#ff4081')">🌸 Pembe</button>
+                    <button class="item-btn" onclick="setDress('#d50000')">🔴 Kırmızı</button>
+                    <button class="item-btn" onclick="setDress('#aa00ff')">💜 Mor</button>
+                    <button class="item-btn" onclick="setDress('#ff4081')">🌸 Pembe</button>
+            <button class="item-btn" onclick="setDress('#ff80ab')">💖 Pudra</button>
+            <button class="item-btn" onclick="setDress('#d50000')">🔴 Kırmızı</button>
+            <button class="item-btn" onclick="setDress('#aa00ff')">💜 Mor</button>
+            <button class="item-btn" onclick="setDress('#e040fb')">🔮 Lila</button>
+            <button class="item-btn" onclick="setDress('#00b0ff')">💙 Mavi</button>
+            <button class="item-btn" onclick="setDress('#69f0ae')">mint Mint</button>
+            <button class="item-btn" onclick="setDress('#ffd54f')">💛 Sarı</button>
+                    <button class="item-btn" onclick="setDress('none')">❌ Yok</button>
+                </div>
+            </div>
+
+            <div class="category-group">
+                <h4>🎀 Fiyonk Renkleri</h4>
+                <div class="option-buttons">
+                    <button class="item-btn" onclick="setBow('#ff1744')">🔴 Kırmızı</button>
+                    <button class="item-btn" onclick="setBow('#ff80ab')">💖 Pembe</button>
+                    <button class="item-btn" onclick="setBow('#e040fb')">💜 Mor</button>
+                    <button class="item-btn" onclick="setBow('#ff1744')">🔴 Kırmızı</button>
+            <button class="item-btn" onclick="setBow('#ff80ab')">💖 Pembe</button>
+            <button class="item-btn" onclick="setBow('#e040fb')">💜 Mor</button>
+            <button class="item-btn" onclick="setBow('#00e676')">💚 Yeşil</button>
+            <button class="item-btn" onclick="setBow('#00b0ff')">💙 Mavi</button>
+            <button class="item-btn" onclick="setBow('#ffea00')">💛 Sarı</button>
+            <button class="item-btn" onclick="setBow('#ff6d00')">🧡 Turuncu</button>
+                    <button class="item-btn" onclick="setBow('none')">❌ Yok</button>
+                </div>
+            </div>
+
+            <div class="category-group">
+                <h4>👓 Aksesuar</h4>
+                <div class="option-buttons">
+                    <button class="item-btn" onclick="toggleAccessory(true)">👓 Pembe Gözlük</button>
+                    <button class="item-btn" onclick="toggleAccessory(false)">❌ Yok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <footer>
         🎀🌷 Loveeee ♡ 🌸
@@ -1186,6 +1404,42 @@
     </footer>
 
     <script>
+        // Elbise Rengini Değiştirme
+function setDress(color) {
+    const dress = document.getElementById("svg-dress");
+    if (color === 'none') {
+        dress.classList.add("hidden");
+    } else {
+        dress.classList.remove("hidden");
+        const path = dress.querySelector("path");
+        if (path) path.setAttribute("fill", color);
+    }
+}
+
+// Fiyonk Rengini Değiştirme
+function setBow(color) {
+    const bow = document.getElementById("svg-bow");
+    if (color === 'none') {
+        bow.classList.add("hidden");
+    } else {
+        bow.classList.remove("hidden");
+        const circles = bow.querySelectorAll("circle");
+        if (circles.length >= 2) {
+            circles[0].setAttribute("fill", color);
+            circles[1].setAttribute("fill", color);
+        }
+    }
+}
+
+// Aksesuar (Gözlük) Aç/Kapat
+function toggleAccessory(show) {
+    const acc = document.getElementById("svg-accessory");
+    if (show) {
+        acc.classList.remove("hidden");
+    } else {
+        acc.classList.add("hidden");
+    }
+}
         document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("memory-file-input");
     const captionInput = document.getElementById("memory-caption");
