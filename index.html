@@ -14,6 +14,108 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Sayaç Widget Stilleri (Sitenin Temasına Uyumlu) */
+.pink-counter-widget {
+    max-width: 380px;
+    margin: 25px auto;
+    padding: 20px;
+    background: rgba(255, 240, 245, 0.95);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    border: 2px solid #ffb6c1;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.counter-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.counter-header h3 {
+    color: #d81b60;
+    font-size: 16px;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.counter-icon {
+    font-size: 18px;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+}
+
+.counter-section {
+    margin: 12px 0;
+}
+
+.counter-title {
+    color: #c2185b;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.counter-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #ad1457;
+    text-shadow: 0 2px 5px rgba(255, 64, 129, 0.2);
+    line-height: 1.1;
+}
+
+.counter-subtitle {
+    color: #d81b60;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 4px;
+    opacity: 0.85;
+}
+
+.counter-divider {
+    border: none;
+    height: 1px;
+    background: #f8bbd0;
+    margin: 12px 0;
+}
+
+/* Geri Sayım Grid Tasarımı */
+.countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.time-box {
+    background: white;
+    padding: 6px 10px;
+    border-radius: 12px;
+    border: 1px solid #ff80ab;
+    min-width: 48px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.03);
+}
+
+.time-num {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #d81b60;
+}
+
+.time-label {
+    font-size: 9px;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: 500;
+}
         /* Çiçek Bahçesi Stilleri */
 .flower-garden-container {
     max-width: 900px;
@@ -567,7 +669,44 @@
 </head>
 
 <body>
+<!-- MUTLULUK VE SAYAC KÖŞESİ -->
+<div class="pink-counter-widget">
+    <div class="counter-header">
+        <span class="counter-icon">💖</span>
+        <h3>Mutluluk Sayacı</h3>
+    </div>
 
+    <!-- Mutluluk Sayacı (Geçen Günler) -->
+    <div class="counter-section">
+        <div class="counter-value" id="happiness-days">150</div>
+        <p class="counter-subtitle">Gündür Mutluluk Dağıtılıyor 🌸</p>
+    </div>
+
+    <hr class="counter-divider">
+
+    <!-- Özel Gün / Yıl Dönümü Geri Sayımı -->
+    <div class="counter-section">
+        <p class="counter-title" id="target-event-title">🎀 Özel Güne Kalan 🎂</p>
+        <div class="countdown-grid">
+            <div class="time-box">
+                <span id="days" class="time-num">0</span>
+                <span class="time-label">Gün</span>
+            </div>
+            <div class="time-box">
+                <span id="hours" class="time-num">0</span>
+                <span class="time-label">Saat</span>
+            </div>
+            <div class="time-box">
+                <span id="minutes" class="time-num">0</span>
+                <span class="time-label">Dakika</span>
+            </div>
+            <div class="time-box">
+                <span id="seconds" class="time-num">0</span>
+                <span class="time-label">Saniye</span>
+            </div>
+        </div>
+    </div>
+</div>
     <nav>
         <div class="logo">🎀 Hello Kitty 🎀</div>
         <div>
@@ -690,6 +829,52 @@
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    // 1. MUTLULUK SAYACI (Geçmiş başlangıç tarihi - Örn: İlişkinin veya sitenin açıldığı tarih)
+    const startDate = new Date("2026-01-01T00:00:00"); 
+    
+    function updateHappinessCounter() {
+        const now = new Date();
+        const diffTime = now - startDate;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        const daysElement = document.getElementById("happiness-days");
+        if (daysElement) {
+            daysElement.textContent = diffDays >= 0 ? diffDays : 0;
+        }
+    }
+
+    // 2. ÖZEL GÜN GERİ SAYIMI (Gelecekteki hedef tarih - Örn: Doğum günü / Yıl dönümü)
+    const targetDate = new Date("2027-01-01T00:00:00"); 
+
+    function updateCountdown() {
+        const now = new Date();
+        const difference = targetDate - now;
+
+        if (difference > 0) {
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((difference / 1000 / 60) % 60);
+            const seconds = Math.floor((difference / 1000) % 60);
+
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+            document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+        } else {
+            document.getElementById("target-event-title").textContent = "✨ Harika Gün Geldi! 🎉";
+            document.getElementById("days").textContent = "0";
+            document.getElementById("hours").textContent = "0";
+            document.getElementById("minutes").textContent = "0";
+            document.getElementById("seconds").textContent = "0";
+        }
+    }
+
+    // İlk çalıştırma ve döngüler
+    updateHappinessCounter();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+});
         document.addEventListener("DOMContentLoaded", () => {
     const field = document.getElementById("flower-field");
     const modal = document.getElementById("flower-modal");
